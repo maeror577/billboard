@@ -9,4 +9,8 @@
   {{ ad.author }}
   {{ ad.content }}
   {{ ad.category }}
+  <hr>
+  {% for response in responses %}
+    {{ response.text }}
+  {% endfor %}
 {% endblock content %}

@@ -22,6 +22,11 @@ class AdDetailView(LoginRequiredMixin, DetailView):
     template_name = 'ads/ad_detail.html'
     queryset = Ad.objects.all()
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['responses'] = Response.objects.filter(ad=self.object)
+        return context
+
 
 class AdCreateView(LoginRequiredMixin, CreateView):
     template_name = 'ads/ad_create.html'
