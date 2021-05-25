@@ -1,0 +1,15 @@
+{% extends 'default.html' %}
+
+{% block title %}
+  Delete an ad
+{% endblock title %}
+
+{% block content %}
+  {{ ad.title }}
+  {{ ad.author }}
+  {{ ad.content }}
+  <form method="post">
+    {% csrf_token %}
+    <input type="submit" value="Delete">
+  </form>
+{% endblock content %}

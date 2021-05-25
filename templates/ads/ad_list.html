@@ -1,0 +1,25 @@
+{% extends 'default.html' %}
+
+{% load static %}
+
+{% block title %}
+  Ads
+{% endblock title %}
+
+{% block content %}
+  <h1>All Ads ({{ all_ads | length }})</h1>
+  {% for ad in ads %}
+    <div>
+      {{ ad.title }}
+      {{ ad.content }}
+      {{ ad.posted }}
+      <a href="/ads/{{ ad.id }}">View</a>
+      <a href="{% url 'ad_edit' ad.id %}">Edit</a>
+      <a href="{% url 'ad_delete' ad.id %}">Delete</a>
+    </div>
+  {% empty %}
+    <h2>No ads!</h2>
+  {% endfor %}
+  <hr>
+  <a href="{% url 'ad_create' %}">Post an ad</a>
+{% endblock content %}
