@@ -10,7 +10,7 @@
 </head>
 <body>
   <a href="{% url 'user_detail' %}">{{ request.user.username }}</a>
-  <a href="{% url 'responses' %}">My responses</a>
+  <a href="{% url 'responses' %}">My responses ({{ user_responses | length }})</a>
   <a href="{% url 'account_logout' %}">Logout</a>
   <hr>
   {% block content %}
