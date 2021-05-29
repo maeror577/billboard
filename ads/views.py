@@ -22,11 +22,6 @@ class AdDetailView(LoginRequiredMixin, DetailView):
     template_name = 'ads/ad_detail.html'
     queryset = Ad.objects.all()
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['responses'] = Response.objects.filter(ad=self.object)
-        return context
-
 
 class AdCreateView(LoginRequiredMixin, CreateView):
     template_name = 'ads/ad_create.html'
@@ -48,3 +43,13 @@ class AdDeleteView(LoginRequiredMixin, DeleteView):
     template_name = 'ads/ad_delete.html'
     queryset = Ad.objects.all()
     success_url = '/'
+
+
+class ResponsesListView(LoginRequiredMixin, ListView):
+    model = Response
+    template_name = 'ads/responses.html'
+    context_object_name = 'responses'
+
+    def get_queryset(self):
+        context = Response.objects.filter(ad__author=self.request.user)
+        return context

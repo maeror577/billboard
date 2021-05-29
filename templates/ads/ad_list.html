@@ -13,7 +13,7 @@
       {{ ad.title }}
       {{ ad.content }}
       {{ ad.posted }}
-      <a href="/ads/{{ ad.id }}">View</a>
+      <a href="{% url 'ad_detail' ad.id %}">View</a>
       <a href="{% url 'ad_edit' ad.id %}">Edit</a>
       <a href="{% url 'ad_delete' ad.id %}">Delete</a>
     </div>

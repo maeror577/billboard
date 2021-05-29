@@ -1,12 +1,11 @@
 {% extends 'default.html' %}
 
 {% block title %}
-  {{ ad.title }}
+  Responses
 {% endblock title %}
 
 {% block content %}
-  {{ ad.title }}
-  {{ ad.author }}
-  {{ ad.content }}
-  {{ ad.category }}
+  {% for response in responses %}
+    <p>{{ response.text }}</p>
+  {% endfor %}
 {% endblock content %}
