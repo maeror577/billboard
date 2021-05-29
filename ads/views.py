@@ -1,6 +1,7 @@
 from django.views.generic import (ListView, DetailView, UpdateView,
                                   CreateView, DeleteView)
 from django.contrib.auth.mixins import (LoginRequiredMixin)
+from django.urls import reverse_lazy
 
 from .models import Ad, Response
 from .forms import AdForm
@@ -53,3 +54,8 @@ class ResponsesListView(LoginRequiredMixin, ListView):
     def get_queryset(self):
         context = Response.objects.filter(ad__author=self.request.user)
         return context
+
+
+class ResponseDeleteView(LoginRequiredMixin, DeleteView):
+    model = Response
+    success_url = reverse_lazy('responses')

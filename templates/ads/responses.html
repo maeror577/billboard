@@ -7,5 +7,9 @@
 {% block content %}
   {% for response in responses %}
     <p>{{ response.text }}</p>
+    <form action="{% url 'response_delete' response.pk %}" method="post">
+      {% csrf_token %}
+      <input type="submit" value="Discard">
+    </form>
   {% endfor %}
 {% endblock content %}
