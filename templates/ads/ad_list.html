@@ -14,7 +14,7 @@
         <p>{{ ad.content }}</p>
         <p>{{ ad.posted }}</p>
         <a href="{% url 'ad_detail' ad.id %}">View</a>
-        {% if not ad.author == request.user %}
+        {% if ad.author == request.user %}
           <a href="{% url 'ad_edit' ad.id %}">Edit</a>
           <a href="{% url 'ad_delete' ad.id %}">Delete</a>
         {% endif %}
