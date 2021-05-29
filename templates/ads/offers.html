@@ -1,0 +1,19 @@
+{% extends 'default.html' %}
+
+{% block title %}
+  Offers
+{% endblock title %}
+
+{% block content %}
+  {% for offer in offers %}
+    <p>{{ offer.text }}</p>
+    {% if not offer.is_accepted %}
+      <a href="{% url 'offer_accept' offer.pk %}">Accept</a>
+    {% endif %}
+    <form action="{% url 'offer_delete' offer.pk %}" method="post">
+      {% csrf_token %}
+      <input type="submit" value="Discard">
+    </form>
+    <p>{{ offer.is_accepted }}</p>
+  {% endfor %}
+{% endblock content %}

@@ -1,9 +1,11 @@
-from ads.models import Response
+from ads.models import Ad, Offer
 
 
 def counters(request):
     if request.user.is_authenticated:
         return {
-            'user_responses': Response.objects.filter(ad__author=request.user)
+            'all_ads': Ad.objects.all(),
+            'user_ads': Ad.objects.filter(author=request.user),
+            'user_offers': Offer.objects.filter(ad__author=request.user),
         }
     return request

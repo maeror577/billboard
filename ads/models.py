@@ -27,11 +27,12 @@ class Ad(models.Model):
         return f'{self.title} ({self.posted.ctime()})'
 
 
-class Response(models.Model):
+class Offer(models.Model):
     ad = models.ForeignKey(Ad, on_delete=models.CASCADE)
     user = models.ForeignKey('auth.User', on_delete=models.CASCADE)
     posted = models.DateTimeField(auto_now_add=True)
     text = models.TextField()
+    is_accepted = models.BooleanField(default=False)
 
     def __str__(self):
         if len(self.text) < 50:

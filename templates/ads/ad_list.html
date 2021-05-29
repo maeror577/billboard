@@ -7,19 +7,21 @@
 {% endblock title %}
 
 {% block content %}
-  <h1>All Ads ({{ all_ads | length }})</h1>
-  {% for ad in ads %}
-    <div>
-      {{ ad.title }}
-      {{ ad.content }}
-      {{ ad.posted }}
-      <a href="{% url 'ad_detail' ad.id %}">View</a>
-      <a href="{% url 'ad_edit' ad.id %}">Edit</a>
-      <a href="{% url 'ad_delete' ad.id %}">Delete</a>
-    </div>
-  {% empty %}
-    <h2>No ads!</h2>
-  {% endfor %}
-  <hr>
-  <a href="{% url 'ad_create' %}">Post an ad</a>
+  <div class="main__ads-wrapper">
+    {% for ad in ads %}
+      <div class="card">
+        <h2>{{ ad.title }}</h2>
+        <p>{{ ad.content }}</p>
+        <p>{{ ad.posted }}</p>
+        <a href="{% url 'ad_detail' ad.id %}">View</a>
+        {% if not ad.author == request.user %}
+          <a href="{% url 'ad_edit' ad.id %}">Edit</a>
+          <a href="{% url 'ad_delete' ad.id %}">Delete</a>
+        {% endif %}
+      </div>
+    {% empty %}
+      <h2>No ads!</h2>
+    {% endfor %}
+    <!-- <a href="{% url 'ad_create' %}">Post an ad</a> -->
+  </div>
 {% endblock content %}
