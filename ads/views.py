@@ -4,6 +4,7 @@ from django.contrib.auth.mixins import (LoginRequiredMixin)
 from django.urls import reverse_lazy
 from django.shortcuts import HttpResponseRedirect
 from django.core.exceptions import PermissionDenied
+from django.core.mail import send_mail
 
 from .models import Ad, Offer
 from .forms import AdForm
@@ -20,6 +21,11 @@ class AdList(LoginRequiredMixin, ListView):
 class AdDetailView(LoginRequiredMixin, DetailView):
     template_name = 'ads/ad_detail.html'
     queryset = Ad.objects.all()
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['offers'] = Offer.objects.filter(ad=self.object)
+        return context
 
 
 class AdCreateView(LoginRequiredMixin, CreateView):
@@ -78,6 +84,14 @@ class OfferListView(LoginRequiredMixin, ListView):
         offer = Offer.objects.get(pk=pk)
         offer.is_accepted = True
         offer.save()
+
+        send_mail(
+            subject='Your offer was accepted!',
+            message='Offer you made was accepted. Here\'s a link:',
+            from_email=None,
+            recipient_list=[offer.user.email]
+        )
+
         return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))
 
 

@@ -9,4 +9,8 @@
   {{ ad.author }}
   {{ ad.content }}
   {{ ad.category }}
+  <hr>
+  {% for offer in offers %}
+    {{ offer.text }}
+  {% endfor %}
 {% endblock content %}
