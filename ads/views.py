@@ -7,6 +7,7 @@ from django.core.exceptions import PermissionDenied
 
 from .models import Ad, Offer
 from .forms import AdForm
+from .filters import OfferFilter
 
 
 class AdList(LoginRequiredMixin, ListView):
@@ -63,6 +64,11 @@ class OfferListView(LoginRequiredMixin, ListView):
     model = Offer
     template_name = 'ads/offers.html'
     context_object_name = 'offers'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['filter'] = OfferFilter(self.request.GET, queryset=self.get_queryset())
+        return context
 
     def get_queryset(self):
         context = Offer.objects.filter(ad__author=self.request.user)

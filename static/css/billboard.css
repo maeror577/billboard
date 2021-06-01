@@ -1,8 +1,13 @@
+aside {
+  position: relative;
+}
+
 aside > ul {
   font-family: 'Merriweather', Helvetica, Arial, sans-serif;
   font-size: 1.5rem;
   text-transform: uppercase;
-  position: fixed;
+  /* position: sticky;
+  top: 3rem; */
   list-style-type: none;
 }
 

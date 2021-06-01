@@ -5,7 +5,11 @@
 {% endblock title %}
 
 {% block content %}
-  {% for offer in offers %}
+  <form method="GET">
+    {{ filter.form }}
+    <input type="submit" value="Find">
+  </form>
+  {% for offer in filter.qs %}
     <p>{{ offer.text }}</p>
     {% if not offer.is_accepted %}
       <a href="{% url 'offer_accept' offer.pk %}">Accept</a>
