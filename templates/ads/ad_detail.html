@@ -10,7 +10,17 @@
   {{ ad.content }}
   {{ ad.category }}
   <hr>
+  <h2>Offers</h2>
   {% for offer in offers %}
-    {{ offer.text }}
+    <p>{{ offer.text }}</p>
+    <p>{{ offer.user }}</p>
   {% endfor %}
+  <hr>
+  <form action="{% url 'ad_detail' object.id %}" method="post">
+    {% csrf_token %}
+    {{ form.user.as_hidden }}
+    {{ form.ad.as_hidden }}
+    {{ form.text }}
+    <button type="submit">Submit</button>
+  </form>
 {% endblock content %}

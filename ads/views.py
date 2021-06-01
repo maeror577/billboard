@@ -1,13 +1,14 @@
 from django.views.generic import (ListView, DetailView, UpdateView,
                                   CreateView, DeleteView)
 from django.contrib.auth.mixins import (LoginRequiredMixin)
+from django.views.generic.edit import FormMixin
 from django.urls import reverse_lazy
 from django.shortcuts import HttpResponseRedirect
 from django.core.exceptions import PermissionDenied
 from django.core.mail import send_mail
 
 from .models import Ad, Offer
-from .forms import AdForm
+from .forms import AdForm, OfferForm
 from .filters import OfferFilter
 
 
@@ -18,14 +19,33 @@ class AdList(LoginRequiredMixin, ListView):
     ordering = ['-posted']
 
 
-class AdDetailView(LoginRequiredMixin, DetailView):
+class AdDetailView(FormMixin, DetailView):
     template_name = 'ads/ad_detail.html'
     queryset = Ad.objects.all()
+    form_class = OfferForm
+
+    def get_success_url(self):
+        return reverse_lazy('ad_detail', kwargs={'pk': self.object.pk})
 
     def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
+        context = super(AdDetailView, self).get_context_data(**kwargs)
         context['offers'] = Offer.objects.filter(ad=self.object)
+        context['form'] = OfferForm(
+            {'user': self.request.user, 'ad': self.object}
+        )
         return context
+
+    def post(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        form = self.get_form()
+        if form.is_valid():
+            return self.form_valid(form)
+        else:
+            return self.form_invalid(form)
+
+    def form_valid(self, form):
+        form.save()
+        return super(AdDetailView, self).form_valid(form)
 
 
 class AdCreateView(LoginRequiredMixin, CreateView):
@@ -73,7 +93,9 @@ class OfferListView(LoginRequiredMixin, ListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['filter'] = OfferFilter(self.request.GET, queryset=self.get_queryset())
+        context['filter'] = OfferFilter(
+            self.request.GET, queryset=self.get_queryset()
+        )
         return context
 
     def get_queryset(self):
