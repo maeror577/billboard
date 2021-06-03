@@ -67,39 +67,44 @@ class AdDetailView(LoginRequiredMixin, FormMixin, DetailView):
 class AdCreateView(LoginRequiredMixin, CreateView):
     template_name = 'ads/ad_create.html'
     form_class = AdForm
-    success_url = '/'
+    success_url = reverse_lazy('ads_list')
+
+    def get_context_data(self, **kwargs):
+        context = super(AdCreateView, self).get_context_data(**kwargs)
+        context['form'] = AdForm(
+            {'author': self.request.user}
+        )
+        return context
 
 
 class AdEditView(LoginRequiredMixin, UpdateView):
     template_name = 'ads/ad_create.html'
     form_class = AdForm
-    success_url = '/'
+    success_url = reverse_lazy('ads_list')
 
     def get_object(self, **kwargs):
         id = self.kwargs.get('pk')
         return Ad.objects.get(pk=id)
 
     def dispatch(self, request, *args, **kwargs):
-        handler = super().dispatch(request, *args, **kwargs)
         user = request.user
         ad = self.get_object()
         if not (ad.author == user or user.is_superuser):
             raise PermissionDenied
-        return handler
+        return super().dispatch(request, *args, **kwargs)
 
 
 class AdDeleteView(LoginRequiredMixin, DeleteView):
     template_name = 'ads/ad_delete.html'
     queryset = Ad.objects.all()
-    success_url = '/'
+    success_url = reverse_lazy('ads_list')
 
     def dispatch(self, request, *args, **kwargs):
-        handler = super().dispatch(request, *args, **kwargs)
         user = request.user
         ad = self.get_object()
         if not (ad.author == user or user.is_superuser):
             raise PermissionDenied
-        return handler
+        return super().dispatch(request, *args, **kwargs)
 
 
 class OfferListView(LoginRequiredMixin, ListView):

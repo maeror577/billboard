@@ -11,8 +11,6 @@
   <p class="ad-detail__category">Category: {{ ad.get_category_display }}</p>
   <form class="ad-detail__offer-form" action="{% url 'ad_detail' object.id %}" method="post">
     {% csrf_token %}
-    {{ form.user.as_hidden }}
-    {{ form.ad.as_hidden }}
     {{ form.text }}
     <button type="submit">Submit</button>
   </form>
