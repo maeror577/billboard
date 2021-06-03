@@ -5,18 +5,11 @@
 {% endblock title %}
 
 {% block content %}
-  {{ ad.title }}
-  {{ ad.author }}
-  {{ ad.content }}
-  {{ ad.category }}
-  <hr>
-  <h2>Offers</h2>
-  {% for offer in offers %}
-    <p>{{ offer.text }}</p>
-    <p>{{ offer.user }}</p>
-  {% endfor %}
-  <hr>
-  <form action="{% url 'ad_detail' object.id %}" method="post">
+  <h1>{{ ad.title }}</h1>
+  <h3>by {{ ad.author }} at {{ ad.posted }}</h3>
+  <p class="ad-detail__content">{{ ad.content }}</p>
+  <p class="ad-detail__category">Category: {{ ad.get_category_display }}</p>
+  <form class="ad-detail__offer-form" action="{% url 'ad_detail' object.id %}" method="post">
     {% csrf_token %}
     {{ form.user.as_hidden }}
     {{ form.ad.as_hidden }}

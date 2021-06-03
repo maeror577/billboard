@@ -1,23 +1,31 @@
 {% extends 'default.html' %}
+{% load static %}
 
 {% block title %}
   Offers
 {% endblock title %}
 
 {% block content %}
-  <form method="GET">
-    {{ filter.form }}
+  <form method="GET" class="offers__search-form">
+    {{ filter.form.as_p }}
     <input type="submit" value="Find">
   </form>
-  {% for offer in filter.qs %}
-    <p>{{ offer.text }}</p>
-    {% if not offer.is_accepted %}
-      <a href="{% url 'offer_accept' offer.pk %}">Accept</a>
-    {% endif %}
-    <form action="{% url 'offer_delete' offer.pk %}" method="post">
-      {% csrf_token %}
-      <input type="submit" value="Discard">
-    </form>
-    <p>{{ offer.is_accepted }}</p>
-  {% endfor %}
+  <ul class="offers__offer-list">
+    {% for offer in filter.qs %}
+      <li {% if offer.is_accepted %}style="background-color:lightgreen;"{% endif %}>
+        <p class="offers__offer-list_text"><span>{{ offer.user }}</span>: {{ offer.text }}</p>
+        <a href="{% url 'offer_accept' offer.pk %}">
+          {% if not offer.is_accepted %}
+            <img src="{% static 'img/accept.png' %}" alt="Accept" class="offers__offer-list_accept-button" width=15 height=15>
+          {% else %}
+            <img src="{% static 'img/discard.png' %}" alt="Discard" class="offers__offer-list_accept-button" width=15 height=15>
+          {% endif %}
+        </a>
+        <form action="{% url 'offer_delete' offer.pk %}" method="post">
+          {% csrf_token %}
+          <input type="image" alt="Delete" src="{% static 'img/delete.png' %}" class="offers__offer-list_delete-button" width=15 height=15>
+        </form>
+      </li>
+    {% endfor %}
+  </ul>
 {% endblock content %}

@@ -9,19 +9,29 @@
 {% block content %}
   <div class="main__ads-wrapper">
     {% for ad in ads %}
-      <div class="card">
-        <h2>{{ ad.title }}</h2>
-        <p>{{ ad.content }}</p>
-        <p>{{ ad.posted }}</p>
-        <a href="{% url 'ad_detail' ad.id %}">View</a>
-        {% if ad.author == request.user %}
-          <a href="{% url 'ad_edit' ad.id %}">Edit</a>
-          <a href="{% url 'ad_delete' ad.id %}">Delete</a>
-        {% endif %}
+      <div class="main__ads-wrapper_card">
+        <a href="{% url 'ad_detail' ad.id %}">
+          <h2>{{ ad.title }}</h2>
+          <p class="main__ads-wrapper_card_author">
+            by {{ ad.author }}
+            {% if ad.author == request.user %}
+             (You)
+            {% endif %}
+          </p>
+          <p class="main__ads-wrapper_card_category">category: {{ ad.get_category_display }}</p>
+          <p class="main__ads-wrapper_card_content">{{ ad.content | truncatewords:50 }}</p>
+          <p class="main__ads-wrapper_card_time">{{ ad.posted }}</p>
+          {% if ad.author == request.user %}
+            <div class="main__ads-wrapper_card_controls">
+              <a href="{% url 'ad_edit' ad.id %}"><img src="{% static 'img/edit.png' %}" alt="Edit ad" width=15 height=15></a>
+              <a href="{% url 'ad_delete' ad.id %}"><img src="{% static 'img/delete.png' %}" alt="Delete ad" widht=15 height=15></a>
+            </div>
+          {% endif %}
+        </a>
       </div>
     {% empty %}
       <h2>No ads!</h2>
     {% endfor %}
-    <!-- <a href="{% url 'ad_create' %}">Post an ad</a> -->
+    <a href="{% url 'ad_create' %}" class="main__ads-wrapper_new-ad"></a>
   </div>
 {% endblock content %}

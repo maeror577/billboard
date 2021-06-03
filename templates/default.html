@@ -14,15 +14,13 @@
   <aside>
     <ul>
       <li><a href="/">All ads ({{ all_ads | length }})</a></li>
-      <li><a href="">My ads ({{ user_ads | length }})</a></li>
+      <li><a href="{% url 'my_ads' %}">My ads ({{ user_ads | length }})</a></li>
       <li><a href="{% url 'offers' %}">My offers ({{ user_offers | length }})</a></li>
       <li><a href="{% url 'user_detail' %}">My profile ({{ request.user.username }})</a></li>
       <li><a href="{% url 'account_logout' %}">Logout</a></li>
     </ul>
   </aside>
   <main>
-    <h1>BILLBOARD</h1>
-    <hr>
     {% block content %}
     {% endblock content %}
   </main>

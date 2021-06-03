@@ -19,7 +19,17 @@ class AdList(LoginRequiredMixin, ListView):
     ordering = ['-posted']
 
 
-class AdDetailView(FormMixin, DetailView):
+class MyAdList(LoginRequiredMixin, ListView):
+    model = Ad
+    template_name = 'ads/ad_list.html'
+    context_object_name = 'ads'
+    ordering = ['-posted']
+
+    def get_queryset(self):
+        return Ad.objects.filter(author=self.request.user)
+
+
+class AdDetailView(LoginRequiredMixin, FormMixin, DetailView):
     template_name = 'ads/ad_detail.html'
     queryset = Ad.objects.all()
     form_class = OfferForm
@@ -45,6 +55,12 @@ class AdDetailView(FormMixin, DetailView):
 
     def form_valid(self, form):
         form.save()
+        send_mail(
+            subject='You\'ve got an offer!',
+            message=f'You have recieved an offer for your ad from user {self.request.user}!',
+            from_email=None,
+            recipient_list=[self.object.author.email]
+        )
         return super(AdDetailView, self).form_valid(form)
 
 
@@ -104,7 +120,7 @@ class OfferListView(LoginRequiredMixin, ListView):
 
     def accept(request, pk):
         offer = Offer.objects.get(pk=pk)
-        offer.is_accepted = True
+        offer.is_accepted = not offer.is_accepted
         offer.save()
 
         send_mail(
