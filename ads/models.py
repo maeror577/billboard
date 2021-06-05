@@ -1,4 +1,5 @@
 from django.db import models
+from django.urls import reverse
 
 
 class Ad(models.Model):
@@ -25,6 +26,9 @@ class Ad(models.Model):
 
     def __str__(self):
         return f'{self.title} ({self.posted.ctime()})'
+
+    def get_absolute_url(self):
+        return reverse('ad_detail', kwargs={'pk': self.pk})
 
 
 class Offer(models.Model):

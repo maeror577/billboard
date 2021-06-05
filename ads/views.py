@@ -130,7 +130,7 @@ class OfferListView(LoginRequiredMixin, ListView):
 
         send_mail(
             subject='Your offer was accepted!',
-            message='Offer you made was accepted. Here\'s a link:',
+            message='Offer you made was accepted.',
             from_email=None,
             recipient_list=[offer.user.email]
         )
