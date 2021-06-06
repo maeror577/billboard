@@ -18,9 +18,17 @@
              (You)
             {% endif %}
           </p>
-          <p class="main__ads-wrapper_card_category">{{ ad.get_category_display }}</p>
           <p class="main__ads-wrapper_card_content">{{ ad.content | truncatewords:50 }}</p>
           <p class="main__ads-wrapper_card_time">{{ ad.posted }}</p>
+            <div class="main__ads-wrapper_card_icons">
+              <p class="main__ads-wrapper_card_icons_category">{{ ad.get_category_display }}</p>
+              {% if ad.image1 or ad.image2 or ad.image3 %}
+                <img class="main__ads-wrapper_card_icons_photo" src="{% static 'img/photo.png' %}" alt="" width=15 height=15>
+              {% endif %}
+              {% if ad.video %}
+                <img class="main__ads-wrapper_card_icons_video" src="{% static 'img/video.png' %}" alt="" width=15 height=15>
+              {% endif %}
+            </div>
           {% if ad.author == request.user %}
             <div class="main__ads-wrapper_card_controls">
               <a href="{% url 'ad_edit' ad.id %}"><img src="{% static 'img/edit.png' %}" alt="Edit ad" width=15 height=15></a>

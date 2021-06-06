@@ -1,5 +1,6 @@
 from django.db import models
 from django.urls import reverse
+from .validators import validate_video_format
 
 
 class Ad(models.Model):
@@ -23,6 +24,11 @@ class Ad(models.Model):
     posted = models.DateTimeField(auto_now_add=True)
     title = models.CharField(max_length=255)
     content = models.TextField()
+    image1 = models.ImageField(upload_to='images/', null=True, blank=True)
+    image2 = models.ImageField(upload_to='images/', null=True, blank=True)
+    image3 = models.ImageField(upload_to='images/', null=True, blank=True)
+    video = models.FileField(upload_to='videos/', null=True, blank=True,
+                             validators=[validate_video_format])
 
     def __str__(self):
         return f'{self.title} ({self.posted.ctime()})'

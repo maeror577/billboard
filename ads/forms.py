@@ -6,7 +6,8 @@ from .models import Ad, Offer
 class AdForm(ModelForm):
     class Meta:
         model = Ad
-        fields = ['author', 'title', 'category', 'content']
+        fields = ['author', 'title', 'category', 'content',
+                  'image1', 'image2', 'image3', 'video']
         widgets = {
             'author': HiddenInput()
         }

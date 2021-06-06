@@ -33,15 +33,38 @@
   font-style: italic;
 }
 
-.main__ads-wrapper_card_category {
+.main__ads-wrapper_card_icons {
+  display: flex;
+  align-items: center;
+  gap: 3px;
   position: absolute;
   top: -1.5rem;
-  border: 1px solid black;
-  border-radius: 10px;
-  padding: 0.5em;
-  background-color: lightgreen;
+}
+
+.main__ads-wrapper_card_icons_category {
   font-family: 'Merriweather', Helvetica, Arial, sans-serif;
   font-weight: 700;
+  font-size: 0.8rem;
+  padding: 0.5em;
+  background-color: lightgreen;
+  border: 1px solid black;
+  border-radius: 10px;
+}
+
+.main__ads-wrapper_card_icons_photo,
+.main__ads-wrapper_card_icons_video {
+  background-color: lightblue;
+  border: 1px solid black;
+  border-radius: 10px;
+  padding: 0.5rem;
+}
+
+.main__ads-wrapper_card__icons_photo {
+  top: 1rem;
+}
+
+.main__ads-wrapper_card_icons_video {
+  top: 4rem;
 }
 
 .main__ads-wrapper_card_controls {
@@ -116,6 +139,22 @@
   font-weight: 700;
   width: 75%;
   margin: auto;
+}
+
+.ad-detail__media {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  justify-content: space-around;
+  align-items: center;
+  width: 75%;
+  margin: auto;
+}
+
+.ad-detail__media img,
+.ad-detail__media video {
+  max-height: 15rem;
+  border-radius: 10px;
 }
 
 .ad-detail__offer-form {
