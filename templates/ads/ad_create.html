@@ -5,7 +5,8 @@
 {% endblock title %}
 
 {% block content %}
-  <form method="post">
+  <h1>Edit an ad</h1>
+  <form class="ad_create__form" method="post">
     {% csrf_token %}
     {{ form }}
     <input type="submit" value="Post">

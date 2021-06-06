@@ -8,4 +8,9 @@ def counters(request):
             'user_ads': Ad.objects.filter(author=request.user),
             'user_offers': Offer.objects.filter(ad__author=request.user),
         }
-    return request
+    else:
+        return {
+            'all_ads': Ad.objects.none(),
+            'user_ads': Ad.objects.none(),
+            'user_offers': Offer.objects.none(),
+        }

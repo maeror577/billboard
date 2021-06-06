@@ -7,13 +7,16 @@
 
 {% block content %}
   <form method="GET" class="offers__search-form">
-    {{ filter.form.as_p }}
-    <input type="submit" value="Find">
+    {{ filter.form }}
+    <input type="submit" value="Search">
   </form>
   <ul class="offers__offer-list">
     {% for offer in filter.qs %}
       <li {% if offer.is_accepted %}style="background-color:lightgreen;"{% endif %}>
-        <p class="offers__offer-list_text"><span>{{ offer.user }}</span>: {{ offer.text }}</p>
+        <div class="offers__offer-list_textblock">
+          <p class="offers__offer-list_text"><span>{{ offer.user }}</span>: {{ offer.text }}</p>
+          <a class="offers__offer-list_link" href="{{ offer.ad.get_absolute_url }}">@{{offer.ad.title | truncatechars:50 }}</a>
+        </div>
         <a href="{% url 'offer_accept' offer.pk %}">
           {% if not offer.is_accepted %}
             <img src="{% static 'img/accept.png' %}" alt="Accept" class="offers__offer-list_accept-button" width=15 height=15>

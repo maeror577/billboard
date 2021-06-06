@@ -6,7 +6,7 @@
 
 {% block content %}
     <h1>{{ user.username }}</h1>
-    <div>
+    <div class="user-detail__form">
       <p>First name:</p>
       <p>{{ user.first_name }}</p>
       <p>Last name:</p>
@@ -16,7 +16,5 @@
       <p>Joined on:</p>
       <p>{{ user.date_joined }}</p>
     </div>
-
-    <a href="{% url 'user_edit' %}">Edit profile</a>
-
+    <button><a href="{% url 'user_edit' %}">Edit profile</a></button>
 {% endblock content %}

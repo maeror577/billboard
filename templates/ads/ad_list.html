@@ -18,7 +18,7 @@
              (You)
             {% endif %}
           </p>
-          <p class="main__ads-wrapper_card_category">category: {{ ad.get_category_display }}</p>
+          <p class="main__ads-wrapper_card_category">{{ ad.get_category_display }}</p>
           <p class="main__ads-wrapper_card_content">{{ ad.content | truncatewords:50 }}</p>
           <p class="main__ads-wrapper_card_time">{{ ad.posted }}</p>
           {% if ad.author == request.user %}

@@ -5,9 +5,10 @@
 {% endblock title %}
 
 {% block content %}
-  {{ ad.title }}
-  {{ ad.author }}
-  {{ ad.content }}
+  <h2>{{ ad.title }}</h2>
+  <h3>by {{ ad.author }} at {{ ad.posted }}</h3>
+  <p class="ad-delete__content">{{ ad.content }}</p>
+  <p class="ad-delete__confirmation-text">Are you sure?</p>
   <form method="post">
     {% csrf_token %}
     <input type="submit" value="Delete">

@@ -5,13 +5,13 @@
 {% endblock title %}
 
 {% block content %}
-  <h1>{{ ad.title }}</h1>
+  <h2>{{ ad.title }}</h2>
   <h3>by {{ ad.author }} at {{ ad.posted }}</h3>
-  <p class="ad-detail__content">{{ ad.content }}</p>
   <p class="ad-detail__category">Category: {{ ad.get_category_display }}</p>
+  <p class="ad-detail__content">{{ ad.content }}</p>
   <form class="ad-detail__offer-form" action="{% url 'ad_detail' object.id %}" method="post">
     {% csrf_token %}
-    {{ form.text }}
+    {{ form }}
     <button type="submit">Submit</button>
   </form>
 {% endblock content %}
