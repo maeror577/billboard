@@ -17,6 +17,7 @@ class AdList(LoginRequiredMixin, ListView):
     template_name = 'ads/ad_list.html'
     context_object_name = 'ads'
     ordering = ['-posted']
+    paginate_by = 10
 
 
 class MyAdList(LoginRequiredMixin, ListView):

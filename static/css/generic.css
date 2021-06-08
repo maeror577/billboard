@@ -39,6 +39,7 @@ h1 {
 
 h2 {
   margin: 10px auto;
+  font-family: 'Merriweather', Helvetica, Arial, sans-serif;
   font-size: 2rem;
   font-weight: 700;
 }
@@ -84,7 +85,6 @@ button, input[type=submit] {
   min-width: 6rem;
   max-width: max-content;
   font-family: 'Merriweather', Helvetica, Arial, sans-serif;
-  /* font-family: inherit; */
   font-size: 1rem;
   border: 1px solid rgb(0,0,0,0.1);
   transition-duration: 0.5s;
@@ -115,11 +115,17 @@ form > label {
   font-weight: 700;
 }
 
-form > input[type="submit"] {
+form .media_column {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 1rem;
+}
+
+form input[type="submit"] {
   grid-column: span 2;
   margin: 1rem auto;
 }
-
 
 aside {
   position: relative;

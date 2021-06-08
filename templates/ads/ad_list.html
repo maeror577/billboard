@@ -40,6 +40,30 @@
     {% empty %}
       <h2>No ads!</h2>
     {% endfor %}
+
     <a href="{% url 'ad_create' %}" class="main__ads-wrapper_new-ad"></a>
   </div>
+  {% if is_paginated %}
+      <nav>
+        <ul class="pagination">
+          {% if page_obj.has_previous %}
+            <li><a href="?page=1">First</a></li>
+            <li><a href="?page={{ page_obj.previous_page_number }}"><<<</a></li>
+          {% endif %}
+
+          {% for num in page_obj.paginator.page_range %}
+            {% if page_obj.number == num %}
+              <li class="pagination_active">{{ num }}</li>
+            {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:3 %}
+              <li><a href="?page={{ num }}">{{ num }}</a></li>
+            {% endif %}
+          {% endfor %}
+
+          {% if page_obj.has_next %}
+            <li><a href="?page={{ page_obj.next_page_number }}">>>></a></li>
+            <li><a href="?page={{ page_obj.paginator.num_pages }}">Last</a></li>
+          {% endif %}
+        </ul>
+      </nav>
+    {% endif %}
 {% endblock content %}
